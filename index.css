@@ -1,10 +1,11 @@
 /* Monospace fonts FTW */
 @font-face {
-  font-family: 'Roboto Mono';
-  font-style: normal;
+  font-family: "Arial";
+  /*font-style: normal;*/
   font-weight: 400;
-  font-display: swap;
-  src: url(https://fonts.gstatic.com/s/robotomono/v13/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_ROW4.woff2) format('woff2');
+  /*font-display: swap;*/
+  /*src: url(https://fonts.gstatic.com/s/robotomono/v13/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_3vq_ROW4.woff2)
+    format("woff2");*/
 }
 
 /* `--theme-color` will change based on the selected location */
@@ -12,7 +13,7 @@
   color-scheme: dark light;
   --red: #6e04aa;
   --blue: #6e04aa;
-  --purple: #6e04aa;
+  --purple: #800000;
   --theme-color: var(--purple);
   --main-color: #fff;
   --fg-color: rgba(127, 127, 127, 0.2);
@@ -171,6 +172,6 @@ svg,
   width: 16px;
 }
 
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }

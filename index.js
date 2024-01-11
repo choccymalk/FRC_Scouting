@@ -35,7 +35,7 @@ let scoutLocation = "Crew 1";
 let isAbsent = false;
 let gameMetrics = [];
 
-let serverURL = "https://data.team4198.org:8000";
+let serverURL = "http://10.0.0.3/";
 
 // If you make a new type, be sure to add it here
 const metricTypes = {
@@ -275,7 +275,7 @@ function saveSurvey() {
         return;
       }
     }
-    if (authPasswd.value == ""){
+    if (authPasswd.value == "0"){
       if (!confirm("Save match data OFFLINE?")) return;
       let surveys = JSON.parse(localStorage.surveys ?? "[]");
       surveys.push([
@@ -317,7 +317,7 @@ function postSurvey(surveyJson){
     });
     newJson += '    "password": "' + authPasswd.value + '"\n}';
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", serverURL + "/pits");
+    xhr.open("POST", serverURL + "/uploads");
   
     xhr.setRequestHeader("Accept", "application/json");
     xhr.setRequestHeader("Content-Type", "application/json");
