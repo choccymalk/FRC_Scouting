@@ -69,13 +69,13 @@ const infiniteRechargeSurvey = {
 
     { "name": "Drive Train Type", "type": "select", "values": ["Mechanum","Tank(traction)","Tank(omni)","Tank(mixed)","Swerve"], "group": "Robot Specs" },
     { "name": "Motor Type", "type": "text", "tip": "Enter type here..." },
-    { "name": "Ability to move Cones", "type": "rating"},
-    { "name": "Ability to move Cubes", "type": "rating"},
-    { "name": "Average Cone cycle Time (s)", "type": "float"},
-    { "name": "Average Cube cycle Time (s)", "type": "float"},
+    { "name": "Ability to move Notes", "type": "rating"},
+    { "name": "Ability to launch Notes", "type": "rating"},
+    { "name": "Average Note cycle Time (s)", "type": "float"},
+    { "name": "Average Note launch Distance (m)", "type": "float"},
     { "name": "Successfull grab rate (%)", "type": "float"},
     { "name": "Robot Weight (lbs)", "type": "float"},
-    { "name": "Max Height Capabilities", "type": "select", "values": ["High","Middle", "Low", "Non-scoring bot"] },
+    { "name": "Max Climb Height Capabilities", "type": "select", "values": ["High","Middle", "Low", "Non-scoring bot"] },
     { "name": "Total Wheels Used", "type": "number" },
 
     { "name": "Where are Pneumatics Used?", "type": "text", "tip": "Type here. Leave blank for none.","group": "Engineered Capabilities" },
