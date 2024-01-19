@@ -20,9 +20,11 @@
       <script type="text/javascript" src= 
         "https://code.jquery.com/jquery-1.7.1.min.js"> 
     </script> 
+    <script type='text/javascript' src='https://knockoutjs.com/downloads/knockout-3.5.1.js'></script>
+    <script src="./index.js"></script>
 </head>
 
-<body>
+<body onload="do_ping()">
 <center><h1>Topper Robotics</h1></center>
   <div class="flex spaced" id="menu-bar">
     <button id="menu-toggle-btn"><i class="bars text-icon"></i>Menu</button>
@@ -90,6 +92,11 @@
   <script src="./icon.js"></script>
   <script src="./metric.js"></script>
   <script src="./index.js"></script>
+  <!---<script>
+  import {doTheThing} from './index.js';
+  let val = doTheThing();
+  window.onload = () =>  doTheThing();
+  </script>-->
 </body>
 
 </html>

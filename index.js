@@ -1,6 +1,7 @@
 if ("serviceWorker" in navigator) {
   window.onload = () => navigator.serviceWorker.register("./sw.js");
 }
+cannotContactServer = 0;
 
 const menuToggleButton = document.querySelector("#menu-toggle-btn");
 const locationText = document.querySelector("#crew-text");
@@ -275,7 +276,7 @@ function saveSurvey() {
         return;
       }
     }
-    if (authPasswd.value == "0"){
+    if (authPasswd.value == "0" && cannotContactServer == "1"){
       if (!confirm("Save match data OFFLINE?")) return;
       let surveys = JSON.parse(localStorage.surveys ?? "[]");
       surveys.push([
@@ -417,41 +418,50 @@ function eraseSurveys() {
     localStorage.surveys = "[]";
   }
 }
+    var do_ping = function() {
+        ping(/*document.getElementById('pingurl').value*/"http://10.0.0.3").then(function(delta) {
+            //alert(delta);
+            console.log(delta);
+        }).catch(function(error) {
+            console.log(String(error));
+            cannotContactServer = 1;
+            console.log(cannotContactServer);
+        });
+    };
+    /**
+ * Creates and loads an image element by url.
+ * @param  {String} url
+ * @return {Promise} promise that resolves to an image element or
+ *                   fails to an Error.
+ */
+var request_image = function(url) {
+  return new Promise(function(resolve, reject) {
+      var img = new Image();
+      img.onload = function() { resolve(img); };
+      img.onerror = function() { reject(url); };
+      img.src = url + '?random-no-cache=' + Math.floor((1 + Math.random()) * 0x10000).toString(16);
+  });
+};
 
-function pingURL() { 
-  var URL = serverURL;
-  var settings = { 
-  
-    // Defines the configurations 
-    // for the request 
-    cache: false, 
-    dataType: "jsonp", 
-    async: true, 
-    crossDomain: true, 
-    url: URL, 
-    method: "GET", 
-    headers: { 
-      accept: "application/json", 
-      "Access-Control-Allow-Origin": "*", 
-    }, 
-  
-    // Defines the response to be made 
-    // for certain status codes 
-    statusCode: { 
-      200: function (response) { 
-        console.log("Status 200: Page is up!"); 
-      }, 
-      400: function (response) { 
-        console.log("Status 400: Page is down."); 
-      }, 
-      0: function (response) { 
-        console.log("Status 0: Page is down."); 
-      }, 
-    }, 
-  }; 
-  
-  // Sends the request and observes the response 
-  $.ajax(settings).done(function (response) { 
-    console.log(response); 
-  }); 
-} 
+/**
+* Pings a url.
+* @param  {String} url
+* @return {Promise} promise that resolves to a ping (ms, float).
+*/
+var ping = function(url) {
+  return new Promise(function(resolve, reject) {
+      var start = (new Date()).getTime();
+      var response = function() { 
+          var delta = ((new Date()).getTime() - start);
+          
+          // HACK: Use a fudge factor to correct the ping for HTTP bulk.
+          delta /= 4;
+          
+          resolve(delta); 
+      };
+      request_image(url).then(response).catch(response);
+      
+      // Set a timeout for max-pings, 5s.
+      setTimeout(function() { reject(Error('Timeout')); }, 5000);
+  });
+};
