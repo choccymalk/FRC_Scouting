@@ -21,7 +21,6 @@
         "https://code.jquery.com/jquery-1.7.1.min.js"> 
     </script> 
     <script type='text/javascript' src='https://knockoutjs.com/downloads/knockout-3.5.1.js'></script>
-    <script src="./index.js"></script>
 </head>
 
 <body onload="do_ping()">
@@ -92,6 +91,8 @@
   <script src="./icon.js"></script>
   <script src="./metric.js"></script>
   <script src="./index.js"></script>
+  <script>window.onload = do_ping()</script>
+  <script>window.onmouseover = do_ping()</script>
   <!---<script>
   import {doTheThing} from './index.js';
   let val = doTheThing();

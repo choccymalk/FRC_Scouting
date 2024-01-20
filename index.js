@@ -36,7 +36,7 @@ let scoutLocation = "Crew 1";
 let isAbsent = false;
 let gameMetrics = [];
 
-let serverURL = "http://10.0.0.3/";
+let serverURL = "http://10.0.0.3";
 
 // If you make a new type, be sure to add it here
 const metricTypes = {
@@ -232,7 +232,7 @@ function setLocation(newLocation = "Crew 1") {
   scoutLocation = newLocation;
   /*let newTheme = "red";
   if (/blue/.test(newLocation.toLowerCase())) newTheme = "blue";*/
-  document.documentElement.style.setProperty("--theme-color", `var(--${"purple"})`);
+ // document.documentElement.style.setProperty("--theme-color", `var(--${"purple"})`);
   localStorage.location = newLocation;
   locationText.innerHTML = newLocation;
   locationSelect.value = newLocation;
@@ -241,6 +241,7 @@ function setLocation(newLocation = "Crew 1") {
 
 /** Validates and saves the current survey to `localStorage` */
 function saveSurvey() {
+  do_ping()
     if (matchListings.length == 0) {
       // Matches a 1-4 long sequence of numbers and an optional character
       if (!/^\d{1,4}[A-Z]?$/.test(teamMetric.value)) {
@@ -276,7 +277,8 @@ function saveSurvey() {
         return;
       }
     }
-    if (authPasswd.value == "0" && cannotContactServer == "1"){
+
+    if (/*authPasswd.value === 0 && */cannotContactServer == "1"){
       if (!confirm("Save match data OFFLINE?")) return;
       let surveys = JSON.parse(localStorage.surveys ?? "[]");
       surveys.push([
@@ -418,9 +420,11 @@ function eraseSurveys() {
     localStorage.surveys = "[]";
   }
 }
-    var do_ping = function() {
-        ping(/*document.getElementById('pingurl').value*/"http://10.0.0.3").then(function(delta) {
+/*var do_ping =*/ 
+function do_ping() {
+        ping(/*document.getElementById('pingurl').value*/"http://google.com").then(function(delta) {
             //alert(delta);
+            //alert("pinging")
             console.log(delta);
         }).catch(function(error) {
             console.log(String(error));
@@ -434,7 +438,7 @@ function eraseSurveys() {
  * @return {Promise} promise that resolves to an image element or
  *                   fails to an Error.
  */
-var request_image = function(url) {
+function request_image(url) {
   return new Promise(function(resolve, reject) {
       var img = new Image();
       img.onload = function() { resolve(img); };
@@ -448,7 +452,7 @@ var request_image = function(url) {
 * @param  {String} url
 * @return {Promise} promise that resolves to a ping (ms, float).
 */
-var ping = function(url) {
+function ping(url) {
   return new Promise(function(resolve, reject) {
       var start = (new Date()).getTime();
       var response = function() { 
@@ -465,3 +469,4 @@ var ping = function(url) {
       setTimeout(function() { reject(Error('Timeout')); }, 5000);
   });
 };
+window.onload = do_ping()
