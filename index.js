@@ -74,15 +74,8 @@ const infiniteRechargeSurvey = {
 
     { "name": "Drive Train Type", "type": "select", "values": ["Mechanum","Tank(traction)","Tank(omni)","Tank(mixed)","Swerve"], "group": "Robot Specs" },
     { "name": "Motor Type", "type": "text", "tip": "Enter type here..." },
-    { "name": "Ability to move Notes", "type": "rating"},
-    { "name": "Ability to launch Notes", "type": "rating"},
-    { "name": "Average Note cycle Time (s)", "type": "float"},
-    { "name": "Average Note launch Distance (m)", "type": "float"},
-    { "name": "Successfull grab rate (%)", "type": "float"},
-    { "name": "Robot Weight (lbs)", "type": "float"},
-    { "name": "Max Climb Height", "type": "select", "values": ["High","Medium", "Low", "Non-scoring bot"] },
     { "name": "Total Wheels Used", "type": "number" },
-
+    { "name": "Total Motors Used", "type": "number" },
 
     { "name": "Where are Pneumatics Used?", "type": "text", "tip": "Type here. Leave blank for none.","group": "Engineered Capabilities" },
     { "name": "Where are 3D-Printed Parts Used?", "type": "text", "tip": "Type here. Leave blank for none." },
@@ -97,6 +90,14 @@ const infiniteRechargeSurvey = {
     { "name": "What is your favorite or least favorite part of this year's game?", "type": "text", "tip": "Type here..." },
     { "name": "Drive station summary", "type": "text", "tip": "Summarize the battle station"},
     { "name": "Are there any other unique abilities or quirks that your robot has that you’d like to talk about?", "type": "text", "tip": "Type here..." },
+
+    { "name": "Ability to move Notes", "type": "rating", "group": "In Match"},
+    { "name": "Ability to launch Notes", "type": "rating"},
+    { "name": "Average Note cycle Time (s)", "type": "float"},
+    { "name": "Average Note launch Distance (m)", "type": "float"},
+    { "name": "Successfull grab rate (%)", "type": "float"},
+    { "name": "Robot Weight (lbs)", "type": "float"},
+    { "name": "Max Climb Height", "type": "select", "values": ["High","Medium", "Low", "Non-scoring bot"] },
   ]
 };
 
@@ -301,7 +302,7 @@ function saveSurvey() {
       }
     }
 
-    if (/*authPasswd.value === 0 && */cannotContactServer == "1" || onnoffline == 1){
+    if (/*authPasswd.value === 0 && */cannotContactServer == "1" && onnoffline == 1){
       if (!confirm("Save match data OFFLINE?")) return;
       let surveys = JSON.parse(localStorage.surveys ?? "[]");
       surveys.push([
