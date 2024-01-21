@@ -1,6 +1,8 @@
 if ("serviceWorker" in navigator) {
   window.onload = () => navigator.serviceWorker.register("./sw.js");
 }
+
+onnoffline = 1;
 cannotContactServer = 0;
 
 const menuToggleButton = document.querySelector("#menu-toggle-btn");
@@ -14,6 +16,7 @@ const templateEditButton = document.querySelector("#template-edit-btn");
 const downloadSelect = document.querySelector("#download-type-sel");
 const surveysDownloadButton = document.querySelector("#surveys-download-btn");
 const surveysEraseButton = document.querySelector("#surveys-erase-btn");
+const surveysSave = document.querySelector("#onnoffline");
 const teamMetric = document.querySelector("#metric-team");
 const teamMetricList = document.querySelector("#teams-list");
 const absentMetric = document.querySelector("#metric-absent");
@@ -31,6 +34,7 @@ teamMetric.oninput = () => backupSurvey();
 absentMetric.onclick = () => toggleAbsent();
 surveySaveButton.onclick = () => saveSurvey();
 surveyResetButton.onclick = () => resetSurvey();
+surveysSave.onclick = () => changeSaveState()
 
 let scoutLocation = "Crew 1";
 let isAbsent = false;
@@ -100,6 +104,24 @@ const infiniteRechargeSurvey = {
 const matchListings = [];
 
 const exampleTemplate = infiniteRechargeSurvey;
+
+console.log(onnoffline);
+
+function changeSaveState(){
+  console.log("changed state");
+  onnoffline = !onnoffline;
+  /*else{
+    onnoffline - 1;
+  }*/
+  console.log(onnoffline);
+  //return;
+}
+
+function resetOnnOffline(){
+  if(onnoffline>1){
+    onnoffline = 1;
+  }
+}
 
 let currentTemplate = JSON.parse(localStorage.template ?? JSON.stringify(exampleTemplate));
 loadTemplate(currentTemplate);
@@ -279,7 +301,7 @@ function saveSurvey() {
       }
     }
 
-    if (/*authPasswd.value === 0 && */cannotContactServer == "1"){
+    if (/*authPasswd.value === 0 && */cannotContactServer == "1" || onnoffline == 1){
       if (!confirm("Save match data OFFLINE?")) return;
       let surveys = JSON.parse(localStorage.surveys ?? "[]");
       surveys.push([
@@ -291,6 +313,7 @@ function saveSurvey() {
       ]);
       localStorage.surveys = JSON.stringify(surveys);
       resetSurvey(false);
+      onnoffline - 1;
     }
     else {
       if (!confirm("Save match data online?")) return;
