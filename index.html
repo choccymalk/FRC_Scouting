@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="theme-color" content="#531516">
   <!-- `user-scalable=no` prevents zooming on mobile devices after tapping twice -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Pit Scouting form for RoboCats 4198 based on MeanScout by Aidunlin.">
@@ -75,9 +76,7 @@
         <datalist id="teams-list"></datalist>
       </div>
       <div>
-        <button id="metric-absent"><i class="square-empty text-icon"></i>Absent</button><a href="http://10.0.0.3/uploader.html"><button>
-      Take Pictures
-      </button></a>
+        <button id="metric-absent"><i class="square-empty text-icon"></i>Absent</button>
       </div>
     </div>
     <div class="flex spaced" id="metrics-custom"></div>
@@ -85,6 +84,8 @@
     <div class="flex spaced">
       <button id="survey-save-btn"><i class="save text-icon"></i>Save</button>
       <button id="survey-reset-btn"><i class="undo text-icon"></i>Reset</button>
+      <button onclick="document.getElementById('file-input').click();">Take Picture</button>
+      <input id="file-input" type="file" name="name" style="display: none;" />
     </div>
   </div>
   <!-- `index.js` should always go last -->

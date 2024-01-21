@@ -79,6 +79,7 @@ const infiniteRechargeSurvey = {
     { "name": "Max Climb Height", "type": "select", "values": ["High","Medium", "Low", "Non-scoring bot"] },
     { "name": "Total Wheels Used", "type": "number" },
 
+
     { "name": "Where are Pneumatics Used?", "type": "text", "tip": "Type here. Leave blank for none.","group": "Engineered Capabilities" },
     { "name": "Where are 3D-Printed Parts Used?", "type": "text", "tip": "Type here. Leave blank for none." },
 

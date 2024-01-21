@@ -11,10 +11,10 @@
 /* `--theme-color` will change based on the selected location */
 :root {
   color-scheme: dark light;
-  --red: #800000;
-  --blue: #800000;
-  --purple: #800000;
-  --theme-color: var(--red);
+  --red: #531516;
+  --blue: #531516;
+  --purple: #531516;
+  --theme-color: var(--purple);
   --main-color: #fff;
   --fg-color: rgba(127, 127, 127, 0.2);
   --bg-color: #000;
@@ -42,7 +42,7 @@ svg,
 .number,
 #menu-toggle-btn,
 #location-text {
-  color: var(--red);
+  color: var(--theme-color);
 }
 
 * {
@@ -168,7 +168,7 @@ svg,
 ::-webkit-scrollbar,
 ::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-corner {
-  background: #800000;
+  background: var(--fg-color);
   width: 16px;
 }
 
