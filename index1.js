@@ -23,7 +23,9 @@ const absentMetric = document.querySelector("#metric-absent");
 const customMetricsDiv = document.querySelector("#metrics-custom");
 const surveySaveButton = document.querySelector("#survey-save-btn");
 const surveyResetButton = document.querySelector("#survey-reset-btn");
+const matchScoring = document.querySelector("#matchScoring");
 
+matchScoring.onclick = () => toggleInMatch();
 menuToggleButton.onclick = () => toggleMenu();
 locationSelect.onchange = e => setLocation(e.target.value);
 templateCopyButton.onclick = () => copyTemplate();
@@ -85,6 +87,10 @@ const matchListings = [];
 const exampleTemplate = infiniteRechargeSurvey;
 
 console.log(onnoffline);
+
+function toggleInMatch(){
+  window.location.replace("index.html");
+} 
 
 function changeSaveState(){
   console.log("changed state");
