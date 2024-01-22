@@ -23,7 +23,9 @@ const absentMetric = document.querySelector("#metric-absent");
 const customMetricsDiv = document.querySelector("#metrics-custom");
 const surveySaveButton = document.querySelector("#survey-save-btn");
 const surveyResetButton = document.querySelector("#survey-reset-btn");
+const matchScoring = document.querySelector("#matchScoring");
 
+matchScoring.onclick = () => toggleInMatch();
 menuToggleButton.onclick = () => toggleMenu();
 locationSelect.onchange = e => setLocation(e.target.value);
 templateCopyButton.onclick = () => copyTemplate();
@@ -91,13 +93,6 @@ const infiniteRechargeSurvey = {
     { "name": "Drive station summary", "type": "text", "tip": "Summarize the battle station"},
     { "name": "Are there any other unique abilities or quirks that your robot has that you’d like to talk about?", "type": "text", "tip": "Type here..." },
 
-    { "name": "Ability to move Notes", "type": "rating", "group": "In Match"},
-    { "name": "Ability to launch Notes", "type": "rating"},
-    { "name": "Average Note cycle Time (s)", "type": "float"},
-    { "name": "Average Note launch Distance (m)", "type": "float"},
-    { "name": "Successfull grab rate (%)", "type": "float"},
-    { "name": "Robot Weight (lbs)", "type": "float"},
-    { "name": "Max Climb Height", "type": "select", "values": ["High","Medium", "Low", "Non-scoring bot"] },
   ]
 };
 
@@ -107,6 +102,10 @@ const matchListings = [];
 const exampleTemplate = infiniteRechargeSurvey;
 
 console.log(onnoffline);
+
+function toggleInMatch(){
+  window.location.replace("match.html");
+} 
 
 function changeSaveState(){
   console.log("changed state");
