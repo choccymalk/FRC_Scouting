@@ -1,6 +1,7 @@
 Forked from VileScout, which was forked from MeanScout
 #
 To do:
+- Build a backend
 - Upload csv's to server
 - Integrate Google Drive API
 - Take pictures and upload to server
