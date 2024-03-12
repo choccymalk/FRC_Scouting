@@ -1,9 +1,8 @@
 Forked from VileScout, which was forked from MeanScout
 #
 To do:
-- Build a backend
-- Upload csv's to server
-- Integrate Google Drive API
-- Take pictures and upload to server
-- Integrate Dropbox API (optional)
 - Come up with a better name
+#
+Things that probably should be done but I don't feel like doing:
+- Integrate Google Drive API
+- Integrate Dropbox API
