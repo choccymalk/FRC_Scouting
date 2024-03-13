@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client-Side JavaScript</title>
+</head>
+<body>
+
+<input type="file" id="fileInput" />
+<button onclick="uploadFile()">Upload File</button>
+<div id="progressBarContainer" style="display:none; margin-top: 10px;">
+    <progress id="progressBar" max="100" value="0"></progress>
+    <span id="progressPercentage">0%</span>
+</div>
+
+<script>
+    function uploadFile() {
+        const fileInput = document.getElementById('fileInput');
+        const serverURL = './server-script.php';
+
+        const formData = new FormData();
+        formData.append('uploadedFile', fileInput.files[0]);
+
+        const xhr = new XMLHttpRequest();
+
+        // Upload progress event
+        xhr.upload.addEventListener('progress', function (event) {
+            if (event.lengthComputable) {
+                const progressBar = document.getElementById('progressBar');
+                const progressPercentage = document.getElementById('progressPercentage');
+                
+                const progressValue = (event.loaded / event.total) * 100;
+                progressBar.value = progressValue;
+                progressPercentage.textContent = Math.round(progressValue) + '%';
+
+                // Display the progress bar container when progress starts
+                document.getElementById('progressBarContainer').style.display = 'block';
+            }
+        });
+
+        // Upload completed event
+        xhr.addEventListener('load', function (event) {
+            if (xhr.status === 200) {
+                // Handle the response from the server
+                const data = JSON.parse(xhr.responseText);
+                console.log(data);
+                // You can perform further actions based on the server response
+            } else {
+                // Handle the error
+                console.error('Error:', xhr.statusText);
+            }
+
+            // Hide the progress bar container when upload is complete
+            document.getElementById('progressBarContainer').style.display = 'none';
+        });
+
+        // Handle errors
+        xhr.addEventListener('error', function (event) {
+            console.error('Error:', xhr.statusText);
+        });
+
+        // Open and send the request
+        xhr.open('POST', serverURL, true);
+        xhr.send(formData);
+    }
+</script>
+
+</body>
+</html>

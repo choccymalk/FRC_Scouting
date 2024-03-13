@@ -2,14 +2,14 @@ if ("serviceWorker" in navigator) {
   window.onload = () => navigator.serviceWorker.register("./sw.js");
 }
 
-onnoffline = 1;
+onnoffline = 0;
 cannotContactServer = 0;
 
 const menuToggleButton = document.querySelector("#menu-toggle-btn");
 const locationText = document.querySelector("#crew-text");
 const menuDiv = document.querySelector("#menu");
 const authPasswd = document.querySelector("#auth-passwd");
-const scoutName = document.querySelector("#scout-name");
+const scoutName = document.querySelector("#scout_name");
 const locationSelect = document.querySelector("#crew-select");
 const templateCopyButton = document.querySelector("#template-copy-btn");
 const templateEditButton = document.querySelector("#template-edit-btn");
@@ -42,7 +42,7 @@ let scoutLocation = "Crew 1";
 let isAbsent = false;
 let gameMetrics = [];
 
-let serverURL = "http://10.0.0.3";
+let serverURL = "https://3984scoutingapp.000webhostapp.com/server-script.php";
 
 // If you make a new type, be sure to add it here
 const metricTypes = {
@@ -76,13 +76,30 @@ const infiniteRechargeSurvey = {
     { "name": "Average Note cycle Time (s)", "type": "float"},
     { "name": "Average Note launch Distance (m)", "type": "float"},
     { "name": "Successfull grab rate (%)", "type": "float"},
-    { "name": "Robot Weight (lbs)", "type": "float"},
-    { "name": "Notes Scored in Amp", "type": "float"},
-    { "name": "Notes Scored in Speaker", "type": "float"},
+    //{ "name": "Robot Weight (lbs)", "type": "float"},
+    { "name": "Notes Scored in Amp (Autonomous)", "type": "number" },
+    { "name": "Notes Scored in Speaker (Autonomous)", "type": "number" },
+    { "name": "Notes Scored in Amp (Teleop)", "type": "number" },
+    { "name": "Notes Scored in Speaker (Teleop)", "type": "number" },
     { "name": "Max Climb Height", "type": "select", "values": ["Center","Right", "Left", "Did  Not Climb"] },
   ]
 };
-
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+let ScoutingNameValue = getCookie("username");
 // const matchMetric = [];
 const matchListings = [];
 
@@ -121,7 +138,7 @@ if (localStorage.backup) {
     const backup = JSON.parse(localStorage.backup);
     authPasswd.value = backup.find(metric => metric.name == "Auth").value;
     // matchMetric.value = matchCount;
-    scoutName.value = backup.find(metric => metric.name == "tName").value;
+    scoutName.value = /*backup.find(metric => metric.name == "tName").value;*/ScoutingNameValue;
     isAbsent = backup.find(metric => metric.name == "Absent").value;
     if (isAbsent) {
       absentMetric.innerHTML = "<i class='square-checked text-icon'></i>Absent";
@@ -142,7 +159,7 @@ function backupSurvey() {
     { name: "Team", value: teamMetric.value },
     { name: "Absent", value: isAbsent },
     { name: "Auth", value: authPasswd.value },
-    { name: "Name", value: scoutName.value},
+    { name: "Name", value: /*scoutName.value*/ScoutingNameValue},
     ...gameMetrics.map(metric => { return { name: metric.name, value: metric.value } })
   ]);
 }
@@ -270,7 +287,7 @@ function saveSurvey() {
         }
       }
   
-      if (scoutName.value == "") {
+      if (/*scoutName.value*/ScoutingNameValue == "") {
           alert("Invalid name value! Please enter your name where it goes.");
           teamMetric.focus();
           return;
@@ -298,7 +315,7 @@ function saveSurvey() {
         { name: "Team", value: teamMetric.value },
         { name: "Absent", value: isAbsent },
         { name: "Location", value: locationSelect.value },
-        { name: "Name", value: scoutName.value},
+        { name: "Name", value: /*scoutName.value*/ScoutingNameValue},
         ...gameMetrics.map(metric => { return { name: metric.name, value: metric.value } })
       ]);
       localStorage.surveys = JSON.stringify(surveys);
@@ -312,19 +329,19 @@ function saveSurvey() {
         { name: "Team", value: teamMetric.value },
         { name: "Absent", value: isAbsent },
         { name: "Location", value: locationSelect.value },
-        { name: "Name", value: scoutName.value},
+        { name: "Name", value: /*scoutName.value*/ScoutingNameValue},
         ...gameMetrics.map(metric => { return { name: metric.name, value: metric.value } })
       ]);
       postSurvey([
         { name: "Team", value: teamMetric.value },
         { name: "Absent", value: isAbsent },
         { name: "Location", value: locationSelect.value },
-        { name: "Name", value: scoutName.value},
+        { name: "Name", value: /*scoutName.value*/ScoutingNameValue},
         ...gameMetrics.map(metric => { return { name: metric.name, value: metric.value } })
       ]);
     }
   }
-
+/*
 function postSurvey(surveyJson){
     newJson = "{\n";
     surveyJson.forEach(metric => {
@@ -371,7 +388,42 @@ function postSurvey(surveyJson){
     xhr.send(newJson);
 
   }
+*/
+function postSurvey(surveyJson) {
+  // Create a JSON file
+  const jsonData = JSON.stringify(surveyJson, null, 2);
+  const blob = new Blob([jsonData], { type: 'application/json' });
 
+  // Create FormData object and append the JSON file
+  const formData = new FormData();
+  formData.append('uploadedFile', blob, 'survey.json');
+  formData.append('password', authPasswd.value);
+
+  const serverURL = 'https://3984scoutingapp.000webhostapp.com/server-script.php';
+  const xhr = new XMLHttpRequest();
+
+  // Upload completed event
+  xhr.addEventListener('load', function (event) {
+      if (xhr.status === 200) {
+          // Handle the response from the server
+          const data = JSON.parse(xhr.responseText);
+          console.log(data);
+          // You can perform further actions based on the server response
+      } else {
+          // Handle the error
+          console.error('Error:', xhr.statusText);
+      }
+  });
+
+  // Handle errors
+  xhr.addEventListener('error', function (event) {
+      console.error('Error:', xhr.statusText);
+  });
+
+  // Open and send the request with FormData
+  xhr.open('POST', serverURL, true);
+  xhr.send(formData);
+}
 /**
  * Resets the current survey
  * @param {boolean} askUser A boolean that represents whether to prompt the user
