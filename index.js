@@ -92,6 +92,7 @@ const infiniteRechargeSurvey = {
     { "name": "What is your favorite or least favorite part of this year's game?", "type": "text", "tip": "Type here..." },
     { "name": "Drive station summary", "type": "text", "tip": "Summarize the battle station"},
     { "name": "Are there any other unique abilities or quirks that your robot has that you’d like to talk about?", "type": "text", "tip": "Type here..." },
+    { "name": "Notes", "type": "text", "tip": "Type here..." },
 
   ]
 };
@@ -396,7 +397,7 @@ function postSurvey(surveyJson) {
   formData.append('uploadedFile', blob, 'survey.json');
   formData.append('password', authPasswd.value);
 
-  const serverURL = 'https://3984scoutingapp.000webhostapp.com/server-script.php';
+  const serverURL = 'https://3984scoutingapp.000webhostapp.com/upload-pit.php';
   const xhr = new XMLHttpRequest();
 
   // Upload completed event

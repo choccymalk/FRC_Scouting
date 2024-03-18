@@ -1,7 +1,7 @@
 {
-  "name": "VileScout - RoboCats Scouting Form",
-  "short_name": "VileScout - Pit Scouting",
-  "description": "Pit Scouting form for RoboCats 4198 based on MeanScout by Aidunlin.",
+  "name": "big bomb",
+  "short_name": "big bomb - Scouting",
+  "description": "Pit and Match Scouting form for 3984 based on VileScout.",
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#6e04aa",
@@ -9,6 +9,6 @@
   "icons": [{
     "src": "./logo.png",
     "type": "image/png",
-    "sizes": "512x512"
+    "sizes": "256x256"
   }]
 }
